@@ -1,0 +1,62 @@
+/* Reset CSS */
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove list styles */
+ol,
+ul {
+  list-style: none;
+}
+
+/* Remove default link styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default button styles */
+button {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+/* Remove default form styles */
+input,
+textarea,
+select {
+  background-color: transparent;
+  border: none;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Remove default image styles */
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  box-sizing: content-box;
+}
