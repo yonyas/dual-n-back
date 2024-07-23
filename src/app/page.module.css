@@ -5,6 +5,14 @@
   flex-grow: 1;
 }
 
+.header {
+  display: flex;
+  padding: 4px 10px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f6ed;
+}
+
 .footer {
   background-color: #f1f1f1;
   padding: 1rem;

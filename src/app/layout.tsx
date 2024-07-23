@@ -6,6 +6,7 @@ import {
   InstagramOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { Image } from "antd";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +23,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${s.body}`}>
+        <header className={s.header}>
+          <div className="logo">
+            <a href="#">
+              <Image
+                src={"/Logo high-res.png"}
+                height={60}
+                preview={false}
+                alt={"nback logo"}
+              />
+            </a>
+          </div>
+          {/* TODO: login 기능은 나중에 개발 */}
+          {/* <Button>Sign Up</Button> */}
+          {/* <Button>Log In</Button> */}
+        </header>
+
         {children}
-        <div className={s.footer}>
+
+        <footer className={s.footer}>
           <a
             href="https://github.com/yonyas"
             target="_blank"
@@ -45,7 +63,7 @@ export default function RootLayout({
           >
             <InstagramOutlined />
           </a>
-        </div>
+        </footer>
       </body>
     </html>
   );
