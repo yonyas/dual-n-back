@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button, Flex, Typography } from "antd";
 import {
@@ -7,59 +7,93 @@ import {
   CaretUpOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { sleep } from "@/utils/sleep";
 import s from "./styles.module.css";
+import { randomNum } from "@/utils/randomNum";
 
 export default function Game() {
   const [n, setN] = useState(2);
   const [trialCounter, setTrialCounter] = useState(0);
+  const [gameActive, setGameActive] = useState(false);
 
-  const [inGame, setInGame] = useState(false);
-  const inGameRef = useRef(false);
+  const [isVisualPressed, setIsVisualPressed] = useState(false);
+  const [visualHistory, setVisualHistory] = useState<
+    {
+      index: number;
+      correct: boolean;
+    }[]
+  >([]);
+  console.log("visualHistory: ", visualHistory);
+
+  const [isAudioPressed, setIsAudioPressed] = useState(false);
+  const [audioHistory, setAudioHistory] = useState<
+    {
+      index: number;
+      correct: boolean;
+    }[]
+  >([]);
+
+  const timeoutId = useRef<number | undefined>();
 
   // const trials = n == 2 ? 22 : 2 * n + 17;
-  const trials = 3;
+  const trials = 4;
 
-  const handleStartClick = async () => {
-    setInGame(true);
-    inGameRef.current = true;
-
-    for (let i = 0; i < trials; i++) {
-      if (!inGameRef.current) {
-        break;
-      }
-      setTrialCounter((prev) => prev + 1);
-
-      const div = document.createElement("div");
-      div.className = s["box"];
-
-      await sleep(100);
-
-      const randomIndex = Math.floor(Math.random() * 9) + 1;
-      const tdByRadomIndex = document.getElementById(randomIndex.toString());
-
-      tdByRadomIndex?.appendChild(div);
-      await sleep(1000);
-      if (tdByRadomIndex?.contains(div)) tdByRadomIndex?.removeChild(div);
-
-      if (i == trials - 1) {
-        resetGameState();
-      }
+  const initGame = () => {
+    setTrialCounter(0);
+    setGameActive(false);
+    setVisualHistory([]);
+    setAudioHistory([]);
+    if (timeoutId.current) {
+      clearTimeout(timeoutId.current);
     }
   };
 
-  const handleStopClick = () => {
-    setInGame(false);
-    resetGameState();
-    inGameRef.current = false;
+  const handleStartClick = () => {
+    setGameActive(true);
 
-    const boxes = document.querySelectorAll(`.${s["box"]}`);
-    boxes.forEach((box) => box.remove());
+    timeoutId.current = window.setTimeout(gameLoop(trialCounter), 1500);
   };
 
-  const resetGameState = () => {
-    setTrialCounter(0);
-    setInGame(false);
+  const gameLoop = (trialCounter: number) => () => {
+    const newTrialCounter = trialCounter + 1;
+    if (newTrialCounter < trials) {
+      generateStimuli();
+      setTrialCounter(newTrialCounter);
+      timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 1500);
+    } else {
+      initGame();
+    }
+  };
+
+  const generateStimuli = () => {
+    const randomVisualIndex = randomNum();
+    const randomAudioIndex = randomNum();
+
+    setVisualHistory((prev) => {
+      const isVisualCorrect = prev.at(-n - 1)?.index === randomVisualIndex;
+      return [
+        ...prev,
+        {
+          index: randomVisualIndex,
+          correct: isVisualCorrect,
+        },
+      ];
+    });
+
+    setAudioHistory((prev) => {
+      const isAudioCorrect = prev.at(-n - 1)?.index === randomAudioIndex;
+      return [
+        ...prev,
+        {
+          index: randomAudioIndex,
+          correct: isAudioCorrect,
+        },
+      ];
+    });
+  };
+
+  const handleStopClick = () => {
+    initGame();
+    clearTimeout(timeoutId.current);
   };
 
   const incrementN = () => {
@@ -70,6 +104,23 @@ export default function Game() {
     if (n > 1) setN(n - 1);
   };
 
+  const handleLeftClick = () => {};
+
+  // useEffect(() => {
+  //   const handleKeyDown = (event: KeyboardEvent) => {
+  //     if (event.key === "ArrowLeft") {
+  //       handleLeftClick();
+  //     } else if (event.key === "ArrowRight") {
+  //       // handleRightClick();
+  //     }
+  //   };
+
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
+
   return (
     <Flex vertical gap={20}>
       <Flex justify="space-between" align="center" gap={20}>
@@ -77,18 +128,18 @@ export default function Game() {
           <Button
             icon={<CaretDownOutlined />}
             onClick={decrementN}
-            disabled={inGame}
+            disabled={gameActive}
           ></Button>
           <Typography>{n}</Typography>
           <Button
             icon={<CaretUpOutlined />}
             onClick={incrementN}
-            disabled={inGame}
+            disabled={gameActive}
           ></Button>
         </Flex>
         <Typography>{`${trialCounter} / ${trials}`}</Typography>
-        <Button onClick={inGame ? handleStopClick : handleStartClick}>
-          {inGame ? "끝내기" : "시작"}
+        <Button onClick={gameActive ? handleStopClick : handleStartClick}>
+          {gameActive ? "끝내기" : "시작"}
         </Button>
         {/* TODO: setting 기능 나중에 개발 */}
         {/* <Button icon={<SettingOutlined />}></Button> */}
@@ -127,6 +178,9 @@ export default function Game() {
               style={{ verticalAlign: "middle" }}
             />
           }
+          onMouseDown={handleLeftClick}
+          onMouseUp={() => {}}
+          disabled={!gameActive}
         >
           Position
         </Button>
@@ -142,6 +196,7 @@ export default function Game() {
             />
           }
           iconPosition="end"
+          disabled={!gameActive}
         >
           Sound
         </Button>
