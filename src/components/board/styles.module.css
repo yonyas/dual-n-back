@@ -17,3 +17,17 @@
   text-align: center;
   position: relative;
 }
+
+.box {
+  border-radius: 4px;
+  width: 140px;
+  height: 140px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.show {
+  background-color: #2b62d7;
+}

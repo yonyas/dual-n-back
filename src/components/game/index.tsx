@@ -18,7 +18,6 @@ export default function Game() {
       correct: boolean;
     }[]
   >([]);
-  console.log("visualHistory: ", visualHistory);
 
   const [isAudioPressed, setIsAudioPressed] = useState(false);
   const [audioHistory, setAudioHistory] = useState<
@@ -46,12 +45,12 @@ export default function Game() {
   const handleStart = () => {
     setGameActive(true);
 
-    timeoutId.current = window.setTimeout(gameLoop(trialCounter), 1500);
+    gameLoop(trialCounter)();
   };
 
   const gameLoop = (trialCounter: number) => () => {
     const newTrialCounter = trialCounter + 1;
-    if (newTrialCounter < trials) {
+    if (newTrialCounter < trials + 1) {
       generateStimuli();
       setTrialCounter(newTrialCounter);
       timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 1500);
@@ -120,7 +119,7 @@ export default function Game() {
         onStop={handleStop}
         onStart={handleStart}
       />
-      <Board />
+      <Board visualHistory={visualHistory} />
       <Buttons />
     </Flex>
   );
