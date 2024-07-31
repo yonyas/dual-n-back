@@ -2,8 +2,7 @@ import s from "./styles.module.css";
 
 export default function Board({
   currentVisualIndex,
-}: // audioHistory,
-{
+}: {
   currentVisualIndex?: number;
 }) {
   return (

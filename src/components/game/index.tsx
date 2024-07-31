@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Flex } from "antd";
 import { randomNum } from "@/utils/randomNum";
 import Board from "../board";
@@ -24,6 +24,22 @@ export default function Game() {
   const [audioHistory, setAudioHistory] = useState<History[]>([]);
 
   const timeoutId = useRef<number | undefined>();
+
+  const sounds: {
+    [key: number]: HTMLAudioElement;
+  } = useMemo(() => {
+    return {
+      1: new Audio("/sound/H.wav"),
+      2: new Audio("/sound/J.wav"),
+      3: new Audio("/sound/K.wav"),
+      4: new Audio("/sound/L.wav"),
+      5: new Audio("/sound/Q.wav"),
+      6: new Audio("/sound/R.wav"),
+      7: new Audio("/sound/S.wav"),
+      8: new Audio("/sound/A.wav"),
+      9: new Audio("/sound/G.wav"),
+    };
+  }, []);
 
   // const trials = n == 2 ? 22 : 2 * n + 17;
   const trials = 7;
@@ -82,6 +98,7 @@ export default function Game() {
         },
       ];
     });
+    sounds[randomAudioIndex].play();
   };
 
   const handleStop = () => {
