@@ -1,36 +1,31 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Flex } from "antd";
 import { randomNum } from "@/utils/randomNum";
 import Board from "../board";
 import Buttons from "../buttons";
 import Panel from "../panel";
 
+export type History = {
+  index: number;
+  match: boolean;
+};
+
 export default function Game() {
   const [n, setN] = useState(2);
   const [trialCounter, setTrialCounter] = useState(0);
   const [gameActive, setGameActive] = useState(false);
 
-  const [isVisualPressed, setIsVisualPressed] = useState(false);
-  const [visualHistory, setVisualHistory] = useState<
-    {
-      index: number;
-      correct: boolean;
-    }[]
-  >([]);
+  const [visualPressed, setVisualPressed] = useState(false);
+  const [visualHistory, setVisualHistory] = useState<History[]>([]);
 
-  const [isAudioPressed, setIsAudioPressed] = useState(false);
-  const [audioHistory, setAudioHistory] = useState<
-    {
-      index: number;
-      correct: boolean;
-    }[]
-  >([]);
+  const [audioPressed, setAudioPressed] = useState(false);
+  const [audioHistory, setAudioHistory] = useState<History[]>([]);
 
   const timeoutId = useRef<number | undefined>();
 
   // const trials = n == 2 ? 22 : 2 * n + 17;
-  const trials = 4;
+  const trials = 7;
 
   const initGame = () => {
     setTrialCounter(0);
@@ -69,7 +64,7 @@ export default function Game() {
         ...prev,
         {
           index: randomVisualIndex,
-          correct: isVisualCorrect,
+          match: isVisualCorrect,
         },
       ];
     });
@@ -80,7 +75,7 @@ export default function Game() {
         ...prev,
         {
           index: randomAudioIndex,
-          correct: isAudioCorrect,
+          match: isAudioCorrect,
         },
       ];
     });
@@ -91,22 +86,50 @@ export default function Game() {
     clearTimeout(timeoutId.current);
   };
 
-  const handleLeftClick = () => {};
+  const handleLeftKeyDown = () => {
+    setVisualPressed(true);
+  };
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event: KeyboardEvent) => {
-  //     if (event.key === "ArrowLeft") {
-  //       handleLeftClick();
-  //     } else if (event.key === "ArrowRight") {
-  //       // handleRightClick();
-  //     }
-  //   };
+  const handleLeftKeyUp = () => {
+    setVisualPressed(false);
+  };
 
-  //   window.addEventListener("keydown", handleKeyDown);
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, []);
+  const handleRightKeyDown = () => {
+    setAudioPressed(true);
+  };
+
+  const handleRightKeyUp = () => {
+    setAudioPressed(false);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const eventcode = event.code;
+      if (eventcode === "ArrowLeft") {
+        handleLeftKeyDown();
+      } else if (eventcode === "ArrowRight") {
+        handleRightKeyDown();
+      } else if (eventcode === "KeyQ") {
+        handleStop();
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      const eventcode = event.code;
+      if (eventcode === "ArrowLeft") {
+        handleLeftKeyUp();
+      } else if (eventcode === "ArrowRight") {
+        handleRightKeyUp();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   return (
     <Flex vertical gap={20}>
@@ -120,7 +143,16 @@ export default function Game() {
         onStart={handleStart}
       />
       <Board visualHistory={visualHistory} />
-      <Buttons />
+      <Buttons
+        visualHistory={visualHistory}
+        visualPressed={visualPressed}
+        audioHistory={audioHistory}
+        audioPressed={audioPressed}
+        onLeftKeyDown={handleLeftKeyDown}
+        onLeftKeyUp={handleLeftKeyUp}
+        onRightKeyDown={handleRightKeyDown}
+        onRightKeyUp={handleRightKeyUp}
+      />
     </Flex>
   );
 }

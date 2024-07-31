@@ -1,7 +1,40 @@
 import { Button, Flex } from "antd";
 import Image from "next/image";
+import { History } from "../game";
 
-export default function Buttons() {
+export default function Buttons({
+  visualHistory,
+  visualPressed,
+  audioHistory,
+  audioPressed,
+  onLeftKeyDown,
+  onRightKeyDown,
+  onLeftKeyUp,
+  onRightKeyUp,
+}: {
+  visualHistory: History[];
+  visualPressed: boolean;
+  audioHistory: History[];
+  audioPressed: boolean;
+  onLeftKeyDown: () => void;
+  onRightKeyDown: () => void;
+  onLeftKeyUp: () => void;
+  onRightKeyUp: () => void;
+}) {
+  const visualMatch = visualHistory?.at(-1)?.match;
+  const visualBackground = visualPressed
+    ? visualMatch
+      ? "green"
+      : "red"
+    : "white";
+
+  const audioMatch = audioHistory?.at(-1)?.match;
+  const audioBackground = audioPressed
+    ? audioMatch
+      ? "green"
+      : "red"
+    : "white";
+
   return (
     <Flex justify="center" gap={8}>
       <Button
@@ -14,9 +47,9 @@ export default function Buttons() {
             style={{ verticalAlign: "middle" }}
           />
         }
-        onMouseUp={() => {}}
-        // onMouseDown={handleLeftClick}
-        // disabled={!gameActive}
+        style={{ backgroundColor: visualBackground }}
+        onMouseDown={onLeftKeyDown}
+        onMouseUp={onLeftKeyUp}
       >
         Position
       </Button>
@@ -31,8 +64,10 @@ export default function Buttons() {
             style={{ verticalAlign: "middle" }}
           />
         }
+        style={{ backgroundColor: audioBackground }}
         iconPosition="end"
-        // disabled={!gameActive}
+        onMouseDown={onRightKeyDown}
+        onMouseUp={onRightKeyUp}
       >
         Sound
       </Button>

@@ -1,13 +1,11 @@
+import { History } from "../game";
 import s from "./styles.module.css";
 
 export default function Board({
   visualHistory,
 }: // audioHistory,
 {
-  visualHistory: {
-    index: number;
-    correct: boolean;
-  }[];
+  visualHistory: History[];
   // audioHistory: {
   //   index: number;
   //   correct: boolean;
