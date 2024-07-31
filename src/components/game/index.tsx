@@ -18,6 +18,7 @@ export default function Game() {
 
   const [visualPressed, setVisualPressed] = useState(false);
   const [visualHistory, setVisualHistory] = useState<History[]>([]);
+
   const [currentVisualIndex, setCurrentVisualIndex] = useState<number>();
 
   const [audioPressed, setAudioPressed] = useState(false);
@@ -77,24 +78,24 @@ export default function Game() {
     const randomAudioIndex = randomNum();
 
     setVisualHistory((prev) => {
-      const isVisualCorrect = prev.at(-n - 1)?.index === randomVisualIndex;
+      const isVisualMatch = prev.at(-n)?.index === randomVisualIndex;
       return [
         ...prev,
         {
           index: randomVisualIndex,
-          match: isVisualCorrect,
+          match: isVisualMatch,
         },
       ];
     });
     setCurrentVisualIndex(randomVisualIndex);
 
     setAudioHistory((prev) => {
-      const isAudioCorrect = prev.at(-n - 1)?.index === randomAudioIndex;
+      const isAudioMatch = prev.at(-n)?.index === randomAudioIndex;
       return [
         ...prev,
         {
           index: randomAudioIndex,
-          match: isAudioCorrect,
+          match: isAudioMatch,
         },
       ];
     });
