@@ -18,6 +18,7 @@ export default function Game() {
 
   const [visualPressed, setVisualPressed] = useState(false);
   const [visualHistory, setVisualHistory] = useState<History[]>([]);
+  const [currentVisualIndex, setCurrentVisualIndex] = useState<number>();
 
   const [audioPressed, setAudioPressed] = useState(false);
   const [audioHistory, setAudioHistory] = useState<History[]>([]);
@@ -48,6 +49,7 @@ export default function Game() {
     if (newTrialCounter < trials + 1) {
       generateStimuli();
       setTrialCounter(newTrialCounter);
+      window.setTimeout(() => setCurrentVisualIndex(undefined), 1400);
       timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 1500);
     } else {
       initGame();
@@ -68,6 +70,7 @@ export default function Game() {
         },
       ];
     });
+    setCurrentVisualIndex(randomVisualIndex);
 
     setAudioHistory((prev) => {
       const isAudioCorrect = prev.at(-n - 1)?.index === randomAudioIndex;
@@ -84,6 +87,7 @@ export default function Game() {
   const handleStop = () => {
     initGame();
     clearTimeout(timeoutId.current);
+    setCurrentVisualIndex(undefined);
   };
 
   const handleLeftKeyDown = () => {
@@ -142,7 +146,7 @@ export default function Game() {
         onStop={handleStop}
         onStart={handleStart}
       />
-      <Board visualHistory={visualHistory} />
+      <Board currentVisualIndex={currentVisualIndex} />
       <Buttons
         visualHistory={visualHistory}
         visualPressed={visualPressed}
