@@ -57,8 +57,7 @@ export default function Game() {
     };
   }, []);
 
-  // const trials = n == 2 ? 22 : 2 * n + 17;
-  const trials = 7;
+  const trials = n == 2 ? 22 : 2 * n + 17;
 
   const initGame = () => {
     setGameActive(true);
