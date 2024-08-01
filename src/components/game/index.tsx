@@ -1,14 +1,25 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Flex } from "antd";
 import { randomNum } from "@/utils/randomNum";
 import Board from "../board";
 import Buttons from "../buttons";
 import Panel from "../panel";
+import { useGameDataContext } from "@/context/gameDataContext";
+
+export type Response = "response" | "no-response";
 
 export type History = {
   index: number;
   match: boolean;
+  myResponse: Response;
 };
 
 export default function Game() {
@@ -17,14 +28,18 @@ export default function Game() {
   const [gameActive, setGameActive] = useState(false);
 
   const [visualPressed, setVisualPressed] = useState(false);
-  const [visualHistory, setVisualHistory] = useState<History[]>([]);
-
   const [currentVisualIndex, setCurrentVisualIndex] = useState<number>();
 
   const [audioPressed, setAudioPressed] = useState(false);
-  const [audioHistory, setAudioHistory] = useState<History[]>([]);
 
   const timeoutId = useRef<number | undefined>();
+
+  const {
+    visualHistories,
+    setVisualHistories,
+    audioHistories,
+    setAudioHistories,
+  } = useGameDataContext();
 
   const sounds: {
     [key: number]: HTMLAudioElement;
@@ -46,18 +61,21 @@ export default function Game() {
   const trials = 7;
 
   const initGame = () => {
+    setGameActive(true);
+    setVisualHistories([]);
+    setAudioHistories([]);
+  };
+
+  const stopGame = () => {
     setTrialCounter(0);
     setGameActive(false);
-    setVisualHistory([]);
-    setAudioHistory([]);
     if (timeoutId.current) {
       clearTimeout(timeoutId.current);
     }
   };
 
   const handleStart = () => {
-    setGameActive(true);
-
+    initGame();
     gameLoop(trialCounter)();
   };
 
@@ -69,7 +87,7 @@ export default function Game() {
       window.setTimeout(() => setCurrentVisualIndex(undefined), 1400);
       timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 1500);
     } else {
-      initGame();
+      stopGame();
     }
   };
 
@@ -77,25 +95,27 @@ export default function Game() {
     const randomVisualIndex = randomNum();
     const randomAudioIndex = randomNum();
 
-    setVisualHistory((prev) => {
+    setVisualHistories((prev) => {
       const isVisualMatch = prev.at(-n)?.index === randomVisualIndex;
       return [
         ...prev,
         {
           index: randomVisualIndex,
           match: isVisualMatch,
+          myResponse: "no-response",
         },
       ];
     });
     setCurrentVisualIndex(randomVisualIndex);
 
-    setAudioHistory((prev) => {
+    setAudioHistories((prev) => {
       const isAudioMatch = prev.at(-n)?.index === randomAudioIndex;
       return [
         ...prev,
         {
           index: randomAudioIndex,
           match: isAudioMatch,
+          myResponse: "no-response",
         },
       ];
     });
@@ -103,13 +123,30 @@ export default function Game() {
   };
 
   const handleStop = () => {
-    initGame();
+    stopGame();
     clearTimeout(timeoutId.current);
     setCurrentVisualIndex(undefined);
   };
 
+  const addMyResponseToHistory = (
+    myResponse: Response,
+    setHistory: Dispatch<SetStateAction<History[]>>
+  ) => {
+    setHistory((prev) => {
+      const lastItem = prev.at(-1);
+      return [
+        ...prev.slice(0, -1),
+        {
+          ...lastItem,
+          myResponse,
+        },
+      ] as History[];
+    });
+  };
+
   const handleLeftKeyDown = () => {
     setVisualPressed(true);
+    addMyResponseToHistory("response", setVisualHistories);
   };
 
   const handleLeftKeyUp = () => {
@@ -118,6 +155,7 @@ export default function Game() {
 
   const handleRightKeyDown = () => {
     setAudioPressed(true);
+    addMyResponseToHistory("response", setAudioHistories);
   };
 
   const handleRightKeyUp = () => {
@@ -166,9 +204,9 @@ export default function Game() {
       />
       <Board currentVisualIndex={currentVisualIndex} />
       <Buttons
-        visualHistory={visualHistory}
+        visualHistories={visualHistories}
         visualPressed={visualPressed}
-        audioHistory={audioHistory}
+        audioHistories={audioHistories}
         audioPressed={audioPressed}
         onLeftKeyDown={handleLeftKeyDown}
         onLeftKeyUp={handleLeftKeyUp}

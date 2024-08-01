@@ -3,32 +3,32 @@ import Image from "next/image";
 import { History } from "../game";
 
 export default function Buttons({
-  visualHistory,
+  visualHistories,
   visualPressed,
-  audioHistory,
+  audioHistories,
   audioPressed,
   onLeftKeyDown,
   onRightKeyDown,
   onLeftKeyUp,
   onRightKeyUp,
 }: {
-  visualHistory: History[];
+  visualHistories: History[];
   visualPressed: boolean;
-  audioHistory: History[];
+  audioHistories: History[];
   audioPressed: boolean;
   onLeftKeyDown: () => void;
   onRightKeyDown: () => void;
   onLeftKeyUp: () => void;
   onRightKeyUp: () => void;
 }) {
-  const visualMatch = visualHistory?.at(-1)?.match;
+  const visualMatch = visualHistories?.at(-1)?.match;
   const visualBackground = visualPressed
     ? visualMatch
       ? "green"
       : "red"
     : "white";
 
-  const audioMatch = audioHistory?.at(-1)?.match;
+  const audioMatch = audioHistories?.at(-1)?.match;
   const audioBackground = audioPressed
     ? audioMatch
       ? "green"
