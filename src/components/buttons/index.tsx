@@ -3,34 +3,34 @@ import Image from "next/image";
 import { History } from "../game";
 
 export default function Buttons({
-  visualHistories,
-  visualPressed,
-  audioHistories,
-  audioPressed,
+  positionHistories,
+  isPositionPressed,
+  soundHistories,
+  soundPressed,
   onLeftKeyDown,
   onRightKeyDown,
   onLeftKeyUp,
   onRightKeyUp,
 }: {
-  visualHistories: History[];
-  visualPressed: boolean;
-  audioHistories: History[];
-  audioPressed: boolean;
+  positionHistories: History[];
+  isPositionPressed: boolean;
+  soundHistories: History[];
+  soundPressed: boolean;
   onLeftKeyDown: () => void;
   onRightKeyDown: () => void;
   onLeftKeyUp: () => void;
   onRightKeyUp: () => void;
 }) {
-  const visualMatch = visualHistories?.at(-1)?.match;
-  const visualBackground = visualPressed
-    ? visualMatch
+  const positionMatch = positionHistories?.at(-1)?.match;
+  const positionBackground = isPositionPressed
+    ? positionMatch
       ? "green"
       : "red"
     : "white";
 
-  const audioMatch = audioHistories?.at(-1)?.match;
-  const audioBackground = audioPressed
-    ? audioMatch
+  const soundMatch = soundHistories?.at(-1)?.match;
+  const soundBackground = soundPressed
+    ? soundMatch
       ? "green"
       : "red"
     : "white";
@@ -47,7 +47,7 @@ export default function Buttons({
             style={{ verticalAlign: "middle" }}
           />
         }
-        style={{ backgroundColor: visualBackground }}
+        style={{ backgroundColor: positionBackground }}
         onMouseDown={onLeftKeyDown}
         onMouseUp={onLeftKeyUp}
       >
@@ -64,7 +64,7 @@ export default function Buttons({
             style={{ verticalAlign: "middle" }}
           />
         }
-        style={{ backgroundColor: audioBackground }}
+        style={{ backgroundColor: soundBackground }}
         iconPosition="end"
         onMouseDown={onRightKeyDown}
         onMouseUp={onRightKeyUp}

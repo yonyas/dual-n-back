@@ -1,9 +1,9 @@
 import s from "./styles.module.css";
 
 export default function Board({
-  currentVisualIndex,
+  currentPositionIndex,
 }: {
-  currentVisualIndex?: number;
+  currentPositionIndex?: number;
 }) {
   return (
     <div className="table-wrapper">
@@ -13,21 +13,21 @@ export default function Board({
             <td id={"1"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 1 && s["show"]
+                  currentPositionIndex === 1 && s["show"]
                 }`}
               />
             </td>
             <td id={"2"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 2 && s["show"]
+                  currentPositionIndex === 2 && s["show"]
                 }`}
               />
             </td>
             <td id={"3"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 3 && s["show"]
+                  currentPositionIndex === 3 && s["show"]
                 }`}
               />
             </td>
@@ -36,21 +36,21 @@ export default function Board({
             <td id={"4"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 4 && s["show"]
+                  currentPositionIndex === 4 && s["show"]
                 }`}
               />
             </td>
             <td id={"5"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 5 && s["show"]
+                  currentPositionIndex === 5 && s["show"]
                 }`}
               />
             </td>
             <td id={"6"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 6 && s["show"]
+                  currentPositionIndex === 6 && s["show"]
                 }`}
               />
             </td>
@@ -59,21 +59,21 @@ export default function Board({
             <td id={"7"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 7 && s["show"]
+                  currentPositionIndex === 7 && s["show"]
                 }`}
               />
             </td>
             <td id={"8"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 8 && s["show"]
+                  currentPositionIndex === 8 && s["show"]
                 }`}
               />
             </td>
             <td id={"9"}>
               <div
                 className={`${s["box"]} ${
-                  currentVisualIndex === 9 && s["show"]
+                  currentPositionIndex === 9 && s["show"]
                 }`}
               />
             </td>

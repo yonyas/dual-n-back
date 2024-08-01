@@ -9,10 +9,10 @@ import {
 } from "react";
 
 type GameDataContextType = {
-  visualHistories: History[];
-  setVisualHistories: Dispatch<SetStateAction<History[]>>;
-  audioHistories: History[];
-  setAudioHistories: Dispatch<SetStateAction<History[]>>;
+  positionHistories: History[];
+  setPositionHistories: Dispatch<SetStateAction<History[]>>;
+  soundHistories: History[];
+  setSoundHistories: Dispatch<SetStateAction<History[]>>;
 };
 
 const GameDataContext = createContext<GameDataContextType>(
@@ -24,16 +24,16 @@ export default function GameDataProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [visualHistories, setVisualHistories] = useState<History[]>([]);
-  const [audioHistories, setAudioHistories] = useState<History[]>([]);
+  const [positionHistories, setPositionHistories] = useState<History[]>([]);
+  const [soundHistories, setSoundHistories] = useState<History[]>([]);
 
   return (
     <GameDataContext.Provider
       value={{
-        visualHistories,
-        setVisualHistories,
-        audioHistories,
-        setAudioHistories,
+        positionHistories,
+        setPositionHistories,
+        soundHistories,
+        setSoundHistories,
       }}
     >
       {children}

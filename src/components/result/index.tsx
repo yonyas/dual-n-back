@@ -11,7 +11,7 @@ type Response = {
 
 export default function Result() {
   const { Title } = Typography;
-  const { visualHistories, audioHistories } = useGameDataContext();
+  const { positionHistories, soundHistories } = useGameDataContext();
 
   const evaluateResponse = (history: History) => {
     const { match, myResponse } = history;
@@ -76,25 +76,25 @@ export default function Result() {
     },
   ];
 
-  const visualData = [
+  const positionData = [
     {
-      index: "Visual",
-      hits: getScore(visualHistories).hits,
-      false: getScore(visualHistories).false,
-      total: getScore(visualHistories).total,
+      index: "Position",
+      hits: getScore(positionHistories).hits,
+      false: getScore(positionHistories).false,
+      total: getScore(positionHistories).total,
     },
   ];
 
-  const audioData = [
+  const soundData = [
     {
-      index: "Audio",
-      hits: getScore(audioHistories).hits,
-      false: getScore(audioHistories).false,
-      total: getScore(audioHistories).total,
+      index: "Sound",
+      hits: getScore(soundHistories).hits,
+      false: getScore(soundHistories).false,
+      total: getScore(soundHistories).total,
     },
   ];
 
-  const data = visualData.concat(audioData);
+  const data = positionData.concat(soundData);
 
   return (
     <Flex vertical>

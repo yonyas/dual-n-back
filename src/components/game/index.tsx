@@ -27,18 +27,18 @@ export default function Game() {
   const [trialCounter, setTrialCounter] = useState(0);
   const [gameActive, setGameActive] = useState(false);
 
-  const [visualPressed, setVisualPressed] = useState(false);
-  const [currentVisualIndex, setCurrentVisualIndex] = useState<number>();
+  const [isPositionPressed, setIsPositionPressed] = useState(false);
+  const [currentPositionIndex, setCurrentPositionIndex] = useState<number>();
 
-  const [audioPressed, setAudioPressed] = useState(false);
+  const [isSoundPressed, setIsSoundPressed] = useState(false);
 
   const timeoutId = useRef<number | undefined>();
 
   const {
-    visualHistories,
-    setVisualHistories,
-    audioHistories,
-    setAudioHistories,
+    positionHistories,
+    setPositionHistories,
+    soundHistories: soundHistories,
+    setSoundHistories: setSoundHistories,
   } = useGameDataContext();
 
   const sounds: {
@@ -61,8 +61,8 @@ export default function Game() {
 
   const initGame = () => {
     setGameActive(true);
-    setVisualHistories([]);
-    setAudioHistories([]);
+    setPositionHistories([]);
+    setSoundHistories([]);
   };
 
   const stopGame = () => {
@@ -83,7 +83,7 @@ export default function Game() {
     if (newTrialCounter < trials + 1) {
       generateStimuli();
       setTrialCounter(newTrialCounter);
-      window.setTimeout(() => setCurrentVisualIndex(undefined), 1900);
+      window.setTimeout(() => setCurrentPositionIndex(undefined), 1900);
       timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 2000);
     } else {
       stopGame();
@@ -91,40 +91,40 @@ export default function Game() {
   };
 
   const generateStimuli = () => {
-    const randomVisualIndex = randomNum();
-    const randomAudioIndex = randomNum();
+    const randomPositionIndex = randomNum();
+    const randomSoundIndex = randomNum();
 
-    setVisualHistories((prev) => {
-      const isVisualMatch = prev.at(-n)?.index === randomVisualIndex;
+    setPositionHistories((prev) => {
+      const isPositionMatch = prev.at(-n)?.index === randomPositionIndex;
       return [
         ...prev,
         {
-          index: randomVisualIndex,
-          match: isVisualMatch,
+          index: randomPositionIndex,
+          match: isPositionMatch,
           myResponse: "no-response",
         },
       ];
     });
-    setCurrentVisualIndex(randomVisualIndex);
+    setCurrentPositionIndex(randomPositionIndex);
 
-    setAudioHistories((prev) => {
-      const isAudioMatch = prev.at(-n)?.index === randomAudioIndex;
+    setSoundHistories((prev) => {
+      const isSoundMatch = prev.at(-n)?.index === randomSoundIndex;
       return [
         ...prev,
         {
-          index: randomAudioIndex,
-          match: isAudioMatch,
+          index: randomSoundIndex,
+          match: isSoundMatch,
           myResponse: "no-response",
         },
       ];
     });
-    sounds[randomAudioIndex].play();
+    sounds[randomSoundIndex].play();
   };
 
   const handleStop = () => {
     stopGame();
     clearTimeout(timeoutId.current);
-    setCurrentVisualIndex(undefined);
+    setCurrentPositionIndex(undefined);
   };
 
   const addMyResponseToHistory = (
@@ -144,21 +144,21 @@ export default function Game() {
   };
 
   const handleLeftKeyDown = () => {
-    setVisualPressed(true);
-    addMyResponseToHistory("response", setVisualHistories);
+    setIsPositionPressed(true);
+    addMyResponseToHistory("response", setPositionHistories);
   };
 
   const handleLeftKeyUp = () => {
-    setVisualPressed(false);
+    setIsPositionPressed(false);
   };
 
   const handleRightKeyDown = () => {
-    setAudioPressed(true);
-    addMyResponseToHistory("response", setAudioHistories);
+    setIsSoundPressed(true);
+    addMyResponseToHistory("response", setSoundHistories);
   };
 
   const handleRightKeyUp = () => {
-    setAudioPressed(false);
+    setIsSoundPressed(false);
   };
 
   useEffect(() => {
@@ -201,12 +201,12 @@ export default function Game() {
         onStop={handleStop}
         onStart={handleStart}
       />
-      <Board currentVisualIndex={currentVisualIndex} />
+      <Board currentPositionIndex={currentPositionIndex} />
       <Buttons
-        visualHistories={visualHistories}
-        visualPressed={visualPressed}
-        audioHistories={audioHistories}
-        audioPressed={audioPressed}
+        positionHistories={positionHistories}
+        isPositionPressed={isPositionPressed}
+        soundHistories={soundHistories}
+        soundPressed={isSoundPressed}
         onLeftKeyDown={handleLeftKeyDown}
         onLeftKeyUp={handleLeftKeyUp}
         onRightKeyDown={handleRightKeyDown}
