@@ -43,18 +43,18 @@ export default function RootLayout({
 
         <footer className={s.footer}>
           <a
-            href="https://github.com/yonyas"
+            href="https://github.com/yonyas/dual-n-back"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <UserOutlined />
+            <GithubOutlined />
           </a>
           <a
             href="https://yonyas.github.io"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <GithubOutlined />
+            <UserOutlined />
           </a>
           <a
             href="https://www.instagram.com/mouseyon"
