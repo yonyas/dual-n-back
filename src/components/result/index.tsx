@@ -42,16 +42,16 @@ export default function Result() {
     const shouldNotResponseCount = trials - shouldResponseCount;
 
     return {
-      hits: (
-        calculateRatio(calculatedResponses.잘누름, shouldResponseCount) +
-        calculateRatio(calculatedResponses.잘안누름, shouldNotResponseCount)
+      hits: calculateRatio(
+        calculatedResponses.잘누름,
+        shouldResponseCount
       ).toFixed(2),
-      false: (
-        calculateRatio(calculatedResponses.잘못누름, shouldNotResponseCount) +
-        calculateRatio(calculatedResponses.안누름, shouldResponseCount)
+      false: calculateRatio(
+        calculatedResponses.잘못누름,
+        shouldNotResponseCount
       ).toFixed(2),
       total: calculateRatio(
-        calculatedResponses.잘누름 || 0 + calculatedResponses.잘안누름 || 0,
+        (calculatedResponses.잘누름 || 0) + (calculatedResponses.잘안누름 || 0),
         trials
       ).toFixed(2),
     };
