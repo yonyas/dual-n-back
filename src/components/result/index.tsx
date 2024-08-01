@@ -1,61 +1,13 @@
 import { useGameDataContext } from "@/context/gameDataContext";
 import { Flex, Table, Typography } from "antd";
-import { History } from "../game";
-
-type Response = {
-  잘누름: number;
-  잘못누름: number;
-  안누름: number;
-  잘안누름: number;
-};
+import { ScoreCalculator } from "@/utils/getScore";
 
 export default function Result() {
   const { Title } = Typography;
   const { positionHistories, soundHistories } = useGameDataContext();
 
-  const evaluateResponse = (history: History) => {
-    const { match, myResponse } = history;
-
-    if (myResponse === "response") {
-      return match ? "잘누름" : "잘못누름";
-    } else {
-      return match ? "안누름" : "잘안누름";
-    }
-  };
-
-  const calculateResponses = (histories: History[]) => {
-    return histories.reduce((acc, cur) => {
-      const response = evaluateResponse(cur);
-      acc[response] = (acc[response] || 0) + 1;
-      return acc;
-    }, {} as Response);
-  };
-
-  const calculateRatio = (count: number, total: number) => {
-    return count && total ? count / total : 0;
-  };
-
-  const getScore = (histories: History[]) => {
-    const calculatedResponses = calculateResponses(histories);
-    const trials = histories.length;
-    const shouldResponseCount = histories.filter((h) => h.match).length;
-    const shouldNotResponseCount = trials - shouldResponseCount;
-
-    return {
-      hits: calculateRatio(
-        calculatedResponses.잘누름,
-        shouldResponseCount
-      ).toFixed(2),
-      false: calculateRatio(
-        calculatedResponses.잘못누름,
-        shouldNotResponseCount
-      ).toFixed(2),
-      total: calculateRatio(
-        (calculatedResponses.잘누름 || 0) + (calculatedResponses.잘안누름 || 0),
-        trials
-      ).toFixed(2),
-    };
-  };
+  const positionScoreCalculator = new ScoreCalculator(positionHistories);
+  const soundScoreCalculator = new ScoreCalculator(soundHistories);
 
   const columns = [
     { title: "", dataIndex: "index", key: "index" },
@@ -79,22 +31,22 @@ export default function Result() {
   const positionData = [
     {
       index: "Position",
-      hits: getScore(positionHistories).hits,
-      false: getScore(positionHistories).false,
-      total: getScore(positionHistories).total,
+      hits: positionScoreCalculator.getScore().hits,
+      false: positionScoreCalculator.getScore().false,
+      total: positionScoreCalculator.getScore().total,
     },
   ];
 
   const soundData = [
     {
       index: "Sound",
-      hits: getScore(soundHistories).hits,
-      false: getScore(soundHistories).false,
-      total: getScore(soundHistories).total,
+      hits: soundScoreCalculator.getScore().hits,
+      false: soundScoreCalculator.getScore().false,
+      total: soundScoreCalculator.getScore().total,
     },
   ];
 
-  const data = positionData.concat(soundData);
+  const data = [...positionData, ...soundData];
 
   return (
     <Flex vertical>
