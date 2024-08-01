@@ -83,8 +83,8 @@ export default function Game() {
     if (newTrialCounter < trials + 1) {
       generateStimuli();
       setTrialCounter(newTrialCounter);
-      window.setTimeout(() => setCurrentVisualIndex(undefined), 1400);
-      timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 1500);
+      window.setTimeout(() => setCurrentVisualIndex(undefined), 1900);
+      timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 2000);
     } else {
       stopGame();
     }
