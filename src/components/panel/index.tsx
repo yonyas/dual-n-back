@@ -1,24 +1,18 @@
+import { useGameControlContext } from "@/context/gameControlContext";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { Button, Flex, Typography } from "antd";
-import { Dispatch, SetStateAction } from "react";
 
-export default function Panel({
-  n,
-  setN,
-  trialCounter,
-  trials,
-  gameActive,
-  onStop,
-  onStart,
-}: {
-  n: number;
-  setN: Dispatch<SetStateAction<number>>;
-  trialCounter: number;
-  trials: number;
-  gameActive: boolean;
-  onStop: () => void;
-  onStart: () => void;
-}) {
+export default function Panel() {
+  const {
+    n,
+    setN,
+    trialCounter,
+    trials,
+    gameActive,
+    handleStop: onStop,
+    handleStart: onStart,
+  } = useGameControlContext();
+
   const incrementN = () => {
     if (n < 9) setN(n + 1);
   };
@@ -34,13 +28,13 @@ export default function Panel({
           icon={<CaretDownOutlined />}
           onClick={decrementN}
           disabled={gameActive}
-        ></Button>
+        />
         <Typography>{n}</Typography>
         <Button
           icon={<CaretUpOutlined />}
           onClick={incrementN}
           disabled={gameActive}
-        ></Button>
+        />
       </Flex>
       <Typography>{`${trialCounter} / ${trials}`}</Typography>
       <Button onClick={gameActive ? onStop : onStart}>

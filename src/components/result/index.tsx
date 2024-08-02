@@ -1,12 +1,12 @@
-import { useGameDataContext } from "@/context/gameDataContext";
 import { Flex, Table, Typography } from "antd";
 import { ScoreCalculator } from "@/utils/getScore";
+import { useStimuliContext } from "@/context/stimuliContext";
 
 export default function Result() {
   const { Title } = Typography;
   const { Column, ColumnGroup } = Table;
 
-  const { positionHistories, soundHistories } = useGameDataContext();
+  const { positionHistories, soundHistories } = useStimuliContext();
 
   const positionScoreCalculator = new ScoreCalculator(positionHistories);
   const soundScoreCalculator = new ScoreCalculator(soundHistories);

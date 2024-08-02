@@ -1,26 +1,23 @@
 import { Button, Flex } from "antd";
 import Image from "next/image";
-import { History } from "../game";
+import { useStimuliContext } from "@/context/stimuliContext";
+import useKeyControl from "@/hooks/useKeyControl";
 
-export default function Buttons({
-  positionHistories,
-  isPositionPressed,
-  soundHistories,
-  soundPressed,
-  onLeftKeyDown,
-  onRightKeyDown,
-  onLeftKeyUp,
-  onRightKeyUp,
-}: {
-  positionHistories: History[];
-  isPositionPressed: boolean;
-  soundHistories: History[];
-  soundPressed: boolean;
-  onLeftKeyDown: () => void;
-  onRightKeyDown: () => void;
-  onLeftKeyUp: () => void;
-  onRightKeyUp: () => void;
-}) {
+export default function Buttons() {
+  const {
+    positionHistories,
+    isPositionPressed,
+    soundHistories,
+    isSoundPressed,
+  } = useStimuliContext();
+
+  const {
+    handleLeftKeyDown,
+    handleLeftKeyUp,
+    handleRightKeyDown,
+    handleRightKeyUp,
+  } = useKeyControl();
+
   const positionMatch = positionHistories?.at(-1)?.match;
   const positionBackground = isPositionPressed
     ? positionMatch
@@ -29,7 +26,7 @@ export default function Buttons({
     : "white";
 
   const soundMatch = soundHistories?.at(-1)?.match;
-  const soundBackground = soundPressed
+  const soundBackground = isSoundPressed
     ? soundMatch
       ? "green"
       : "red"
@@ -48,8 +45,8 @@ export default function Buttons({
           />
         }
         style={{ backgroundColor: positionBackground }}
-        onMouseDown={onLeftKeyDown}
-        onMouseUp={onLeftKeyUp}
+        onMouseDown={handleLeftKeyDown}
+        onMouseUp={handleLeftKeyUp}
       >
         Position
       </Button>
@@ -66,8 +63,8 @@ export default function Buttons({
         }
         style={{ backgroundColor: soundBackground }}
         iconPosition="end"
-        onMouseDown={onRightKeyDown}
-        onMouseUp={onRightKeyUp}
+        onMouseDown={handleRightKeyDown}
+        onMouseUp={handleRightKeyUp}
       >
         Sound
       </Button>

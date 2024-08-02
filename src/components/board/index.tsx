@@ -1,10 +1,8 @@
 import s from "./styles.module.css";
+import { useStimuliContext } from "@/context/stimuliContext";
 
-export default function Board({
-  currentPositionIndex,
-}: {
-  currentPositionIndex?: number;
-}) {
+export default function Board() {
+  const { currentPositionIndex } = useStimuliContext();
   return (
     <div className="table-wrapper">
       <table className={s["table"]}>
