@@ -7,9 +7,9 @@ import GameDataProvider from "@/context/gameDataContext";
 
 export default function Home() {
   return (
-    <main style={{ margin: "20px" }}>
+    <main style={{ margin: "20px", height: "100%" }}>
       <GameDataProvider>
-        <Flex justify="space-around" align="center">
+        <Flex justify="space-around" align="center" style={{ height: "100%" }}>
           <Game />
           <Result />
         </Flex>

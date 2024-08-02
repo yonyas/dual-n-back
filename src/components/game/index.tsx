@@ -52,7 +52,7 @@ export default function Game() {
         4: new Audio("/sound/L.wav"),
         5: new Audio("/sound/Q.wav"),
         6: new Audio("/sound/R.wav"),
-        7: new Audio("/sound/S.wav"),
+        7: new Audio("/sound/P.wav"),
         8: new Audio("/sound/A.wav"),
         9: new Audio("/sound/G.wav"),
       };
@@ -86,8 +86,8 @@ export default function Game() {
     if (newTrialCounter < trials + 1) {
       generateStimuli();
       setTrialCounter(newTrialCounter);
-      window.setTimeout(() => setCurrentPositionIndex(undefined), 1900);
-      timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 2000);
+      window.setTimeout(() => setCurrentPositionIndex(undefined), 2500);
+      timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 2600);
     } else {
       stopGame();
     }
