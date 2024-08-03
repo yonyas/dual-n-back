@@ -34,6 +34,7 @@ export default function GameControlProvider({
   const [trialCounter, setTrialCounter] = useState(0);
   const [gameActive, setGameActive] = useState(false);
 
+  const currentPositionIndexTimeoutId = useRef<number | undefined>();
   const timeoutId = useRef<number | undefined>();
 
   const trials = n == 2 ? 22 : 2 * n + 17;
@@ -54,8 +55,14 @@ export default function GameControlProvider({
   const stopGame = () => {
     setTrialCounter(0);
     setGameActive(false);
+    setCurrentPositionIndex(undefined);
     if (timeoutId.current) {
       clearTimeout(timeoutId.current);
+      timeoutId.current = undefined;
+    }
+    if (currentPositionIndexTimeoutId.current) {
+      clearTimeout(currentPositionIndexTimeoutId.current);
+      currentPositionIndexTimeoutId.current = undefined;
     }
   };
 
@@ -69,7 +76,10 @@ export default function GameControlProvider({
     if (newTrialCounter < trials + 1) {
       generateStimuli(n);
       setTrialCounter(newTrialCounter);
-      window.setTimeout(() => setCurrentPositionIndex(undefined), 2500);
+      currentPositionIndexTimeoutId.current = window.setTimeout(
+        () => setCurrentPositionIndex(undefined),
+        2500
+      );
       timeoutId.current = window.setTimeout(gameLoop(newTrialCounter), 2600);
     } else {
       stopGame();
@@ -78,8 +88,6 @@ export default function GameControlProvider({
 
   const handleStop = () => {
     stopGame();
-    clearTimeout(timeoutId.current);
-    setCurrentPositionIndex(undefined);
   };
 
   return (

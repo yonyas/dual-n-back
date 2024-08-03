@@ -27,7 +27,7 @@ export default function Panel() {
         <Button
           icon={<CaretDownOutlined />}
           onClick={decrementN}
-          disabled={gameActive}
+          disabled={gameActive || n === 2}
         />
         <Typography>{n}</Typography>
         <Button
