@@ -48,7 +48,7 @@ export default function Buttons() {
         onMouseDown={handleLeftKeyDown}
         onMouseUp={handleLeftKeyUp}
       >
-        Position
+        위치
       </Button>
 
       <Button
@@ -66,7 +66,7 @@ export default function Buttons() {
         onMouseDown={handleRightKeyDown}
         onMouseUp={handleRightKeyUp}
       >
-        Sound
+        소리
       </Button>
     </Flex>
   );
