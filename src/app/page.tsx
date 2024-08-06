@@ -15,6 +15,9 @@ export default function Home() {
             Button: {
               lineWidthFocus: 0,
             },
+            InputNumber: {
+              controlWidth: 65,
+            },
           },
           token: {
             motion: false,

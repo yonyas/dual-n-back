@@ -1,13 +1,13 @@
 import { useGameControlContext } from "@/context/gameControlContext";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
-import { Button, Flex, Typography } from "antd";
+import { Button, Flex, InputNumber, Typography } from "antd";
 
 export default function Panel() {
   const {
     n,
     setN,
     trialCounter,
-    trials,
+    handleTrialsChange,
     gameActive,
     handleStop: onStop,
     handleStart: onStart,
@@ -36,7 +36,16 @@ export default function Panel() {
           disabled={gameActive}
         />
       </Flex>
-      <Typography>{`${trialCounter} / ${trials}`}</Typography>
+      <Flex gap={4}>
+        <Typography>{`${trialCounter} /`}</Typography>
+        <InputNumber
+          min={2 * n + 17}
+          max={500}
+          defaultValue={60}
+          onChange={handleTrialsChange}
+          size={"small"}
+        />
+      </Flex>
       <Button onClick={gameActive ? onStop : onStart}>
         {gameActive ? "끝내기" : "시작"}
       </Button>

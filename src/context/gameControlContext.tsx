@@ -8,17 +8,18 @@ import {
   useState,
 } from "react";
 import { useStimuliContext } from "./stimuliContext";
+import { InputNumberProps } from "antd";
 
 type GameControlContextType = {
   n: number;
   setN: Dispatch<SetStateAction<number>>;
   trialCounter: number;
   setTrialCounter: Dispatch<SetStateAction<number>>;
-  trials: number;
   gameActive: boolean;
   setGameActive: Dispatch<SetStateAction<boolean>>;
   handleStart: () => void;
   handleStop: () => void;
+  handleTrialsChange: InputNumberProps["onChange"];
 };
 
 const GameControlContext = createContext<GameControlContextType>(
@@ -31,13 +32,12 @@ export default function GameControlProvider({
   children: React.ReactNode;
 }) {
   const [n, setN] = useState(2);
+  const [trials, setTrials] = useState(60);
   const [trialCounter, setTrialCounter] = useState(0);
   const [gameActive, setGameActive] = useState(false);
 
   const currentPositionIndexTimeoutId = useRef<number | undefined>();
   const timeoutId = useRef<number | undefined>();
-
-  const trials = n == 2 ? 22 : 2 * n + 17;
 
   const {
     setCurrentPositionIndex,
@@ -90,6 +90,10 @@ export default function GameControlProvider({
     stopGame();
   };
 
+  const handleTrialsChange: InputNumberProps["onChange"] = (value) => {
+    setTrials(value as number);
+  };
+
   return (
     <GameControlContext.Provider
       value={{
@@ -99,9 +103,9 @@ export default function GameControlProvider({
         setTrialCounter,
         gameActive,
         setGameActive,
-        trials,
         handleStart,
         handleStop,
+        handleTrialsChange,
       }}
     >
       {children}
