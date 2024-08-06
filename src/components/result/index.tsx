@@ -90,7 +90,7 @@ export default function Result() {
             }}
           />
         </ColumnGroup>
-        <Column title="점수" dataIndex="점수" key="점수" />
+        <Column title="점수" dataIndex="점수" key="점수" width={70} />
       </Table>
     </Flex>
   );
