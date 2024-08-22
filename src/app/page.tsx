@@ -5,10 +5,11 @@ import Game from "@/components/game";
 import Result from "@/components/result";
 import GameControlProvider from "@/context/gameControlContext";
 import StimuliProvider from "@/context/stimuliContext";
+import s from "./page.module.css";
 
 export default function Home() {
   return (
-    <main style={{ margin: "20px", height: "100%" }}>
+    <main style={{ padding: "20px", flex: 1 }}>
       <ConfigProvider
         theme={{
           components: {
@@ -27,9 +28,9 @@ export default function Home() {
         <StimuliProvider>
           <GameControlProvider>
             <Flex
-              justify="space-around"
               align="center"
-              style={{ height: "100%" }}
+              justify="space-around"
+              className={s["container"]}
             >
               <Game />
               <Result />

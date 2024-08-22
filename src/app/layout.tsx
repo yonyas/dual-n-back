@@ -40,8 +40,11 @@ export default function RootLayout({
             {/* <Button>Sign Up</Button> */}
             {/* <Button>Log In</Button> */}
           </header>
-
-          {children}
+          <div
+            style={{ flex: 1, display: "flex", height: "100%", minHeight: 0 }}
+          >
+            {children}
+          </div>
 
           <footer className={s.footer}>
             <a

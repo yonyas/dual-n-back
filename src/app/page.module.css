@@ -1,8 +1,9 @@
 .body {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  flex-grow: 1;
+  height: 100%;
+  min-height: 100vh;
+  flex: 1;
 }
 
 .header {
@@ -11,18 +12,22 @@
   justify-content: space-between;
   align-items: center;
   background-color: #f9f6ed;
+  height: 68px;
 }
 
 .footer {
-  background-color: #f1f1f1;
-  padding: 1rem;
-  text-align: center;
-  margin-top: auto;
-  width: 100%;
-  border-top: 1px solid #ccc;
   display: flex;
+  flex: 1;
   gap: 2.4rem;
   justify-content: center;
+  background-color: #f1f1f1;
+  margin-top: auto;
+  width: 100%;
+  height: 62px;
+  max-height: 62px;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+  text-align: center;
 }
 
 .footer a {
@@ -33,4 +38,17 @@
 .footer a:hover {
   color: #0070f3;
   transform: scale(1.2);
+}
+
+.container {
+  height: 100%;
+  gap: 1rem;
+  flex: 1;
+}
+
+@media screen and (max-width: 990px) {
+  .container {
+    flex-direction: column;
+    gap: 4rem;
+  }
 }

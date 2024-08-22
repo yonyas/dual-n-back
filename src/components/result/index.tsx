@@ -50,7 +50,7 @@ export default function Result() {
   const data = [...positionData, ...soundData, ...total];
 
   return (
-    <Flex vertical>
+    <Flex vertical style={{ width: 400, justifyContent: "center" }}>
       <Title level={3}>점수</Title>
       <Table dataSource={data} pagination={false}>
         <Column title="" dataIndex="종류" key="종류" />
