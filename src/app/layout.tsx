@@ -4,6 +4,7 @@ import s from "./page.module.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Header from "./header";
 import Footer from "./footer";
+import ThemeProvider from "@/context/themeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} ${s.body}`}>
         <AntdRegistry>
-          <Header />
+          <ThemeProvider>
+            <Header />
 
-          <div style={{ flex: 1, display: "flex" }}>{children}</div>
+            <div style={{ flex: 1, display: "flex" }}>{children}</div>
 
-          <Footer />
+            <Footer />
+          </ThemeProvider>
         </AntdRegistry>
       </body>
     </html>

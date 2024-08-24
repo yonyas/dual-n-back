@@ -5,14 +5,17 @@
   min-height: 100vh;
   flex: 1;
 }
+.body .dark {
+  background-color: var(--background-dark-color);
+}
 
 .header {
   display: flex;
-  padding: 4px 10px;
+  padding: 4px 20px;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f6ed;
   height: 68px;
+  border-bottom: 1px solid #ccc;
 }
 
 .footer {
@@ -33,6 +36,10 @@
 .footer a {
   font-size: 24px;
   transition: color 0.3s, transform 0.3s;
+}
+
+.footer.dark {
+  background-color: var(--background-dark-color);
 }
 
 .footer a:hover {

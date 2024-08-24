@@ -61,3 +61,42 @@ svg {
   height: auto;
   box-sizing: content-box;
 }
+
+/* variables */
+
+/* 색상 변수 */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --accent-color: #e74c3c;
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  --muted-text-color: #777;
+}
+
+/* 다크 테마 색상 변수 */
+:root {
+  --accent-dark-color: #c0392b;
+  --background-dark-color: #121212;
+  --header-dark-color: #525151;
+  --text-dark-color: #ecf0f1;
+  --muted-text-dark-color: #bdc3c7;
+}
+
+/* 간격 변수 */
+:root {
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 32px;
+}
+
+/* 폰트 변수 */
+:root {
+  --font-family: "Arial, sans-serif";
+  --font-size-base: 16px;
+  --font-size-large: 24px;
+  --font-size-small: 12px;
+}
+.dark {
+  background-color: var(--primary-dark-color);
+}

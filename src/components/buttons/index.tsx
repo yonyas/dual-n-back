@@ -23,14 +23,14 @@ export default function Buttons() {
     ? positionMatch
       ? "green"
       : "red"
-    : "white";
+    : "transparent";
 
   const soundMatch = soundHistories?.at(-1)?.match;
   const soundBackground = isSoundPressed
     ? soundMatch
       ? "green"
       : "red"
-    : "white";
+    : "transparent";
 
   return (
     <Flex justify="center" gap={8}>

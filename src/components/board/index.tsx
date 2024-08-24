@@ -1,11 +1,14 @@
+import { useThemeContext } from "@/context/themeContext";
 import s from "./styles.module.css";
 import { useStimuliContext } from "@/context/stimuliContext";
 
 export default function Board() {
   const { currentPositionIndex } = useStimuliContext();
+  const { theme } = useThemeContext();
+
   return (
     <div className="table-wrapper">
-      <table className={s["table"]}>
+      <table className={`${s.table} ${theme === "dark" ? s.dark : ""}`}>
         <tbody>
           <tr>
             <td id={"1"}>
