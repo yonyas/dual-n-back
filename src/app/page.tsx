@@ -9,7 +9,7 @@ import s from "./page.module.css";
 import { useThemeContext } from "@/context/themeContext";
 
 export default function Home() {
-  const { theme, setTheme } = useThemeContext();
+  const { theme } = useThemeContext();
 
   return (
     <main

@@ -1,13 +1,12 @@
 "use client";
-import { Theme, useThemeContext } from "@/context/themeContext";
+import { useThemeContext } from "@/context/themeContext";
 import s from "./page.module.css";
 import {
   GithubOutlined,
   InstagramOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
-import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
+import { ThemeIcon } from "@/components/themeIcon";
 
 export default function Footer() {
   const { theme } = useThemeContext();
@@ -19,31 +18,22 @@ export default function Footer() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {themeIcon(GithubOutlined, theme)}
+        <ThemeIcon icon={GithubOutlined} />
       </a>
       <a
         href="https://yonyas.github.io"
         target="_blank"
         rel="noopener noreferrer"
       >
-        {themeIcon(UserOutlined, theme)}
+        <ThemeIcon icon={UserOutlined} />
       </a>
       <a
         href="https://www.instagram.com/mouseyon"
         target="_blank"
         rel="noopener noreferrer"
       >
-        {themeIcon(InstagramOutlined, theme)}
+        <ThemeIcon icon={InstagramOutlined} />
       </a>
     </footer>
   );
 }
-
-const themeIcon = (
-  Icon: ForwardRefExoticComponent<
-    Omit<AntdIconProps, "ref"> & RefAttributes<HTMLSpanElement>
-  >,
-  theme: Theme
-) => {
-  return <Icon style={{ color: theme === "dark" ? "white" : "black" }} />;
-};

@@ -1,5 +1,6 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export type Theme = "light" | "dark";
 
@@ -7,7 +8,7 @@ const ThemeContext = createContext<ThemeContextType>({} as ThemeContextType);
 
 export type ThemeContextType = {
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
+  changeTheme: (theme: Theme) => void;
 };
 
 export default function ThemeProvider({
@@ -15,10 +16,21 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(
+    getLocalStorage("theme") || "light"
+  );
+
+  const changeTheme = (theme: Theme) => {
+    setTheme(theme);
+    setLocalStorage("theme", theme);
+  };
+
+  useEffect(() => {
+    changeTheme(getLocalStorage("theme"));
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
       {children}
     </ThemeContext.Provider>
   );
