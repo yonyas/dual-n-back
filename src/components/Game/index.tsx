@@ -1,8 +1,8 @@
 "use client";
 import { Flex } from "antd";
-import Board from "../Board";
-import Buttons from "../Buttons";
-import Panel from "../Panel";
+import Board from "./Board";
+import Buttons from "./Buttons";
+import Panel from "./Panel";
 
 export type Response = "response" | "no-response";
 
@@ -18,6 +18,7 @@ export default function Game() {
       <Panel />
       <Board />
       <Buttons />
+      {/* config modal */}
     </Flex>
   );
 }
