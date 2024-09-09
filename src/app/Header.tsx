@@ -2,11 +2,11 @@
 import { Flex, Switch } from "antd";
 import s from "./page.module.css";
 import { MoonOutlined, SettingFilled, SunOutlined } from "@ant-design/icons";
-import { useThemeContext } from "@/context/themeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 import Image from "next/image";
 import blackLogo from "../../public/nback-logo/png/logo-black.png";
 import whiteLogo from "../../public/nback-logo/png/logo-white.png";
-import { ThemeButton } from "@/components/themeIcon";
+import { ThemeButton } from "@/components/ThemeIcon";
 
 export default function Header() {
   const { theme, changeTheme } = useThemeContext();

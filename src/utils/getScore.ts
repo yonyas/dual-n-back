@@ -1,4 +1,4 @@
-import { History } from "@/components/game";
+import { History } from "@/components/Game";
 
 type Response = {
   잘누름: number;

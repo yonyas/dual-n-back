@@ -1,5 +1,5 @@
 "use client";
-import { History } from "@/components/game";
+import { History } from "@/components/Game";
 import { randomNum } from "@/utils/randomNum";
 import { getSounds } from "@/utils/sounds";
 import {

@@ -1,6 +1,6 @@
 import { Flex, Table, Typography } from "antd";
 import { ScoreCalculator } from "@/utils/getScore";
-import { useStimuliContext } from "@/context/stimuliContext";
+import { useStimuliContext } from "@/context/StimuliContext";
 
 export default function Result() {
   const { Title } = Typography;

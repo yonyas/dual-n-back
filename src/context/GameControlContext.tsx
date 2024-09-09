@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useStimuliContext } from "./stimuliContext";
+import { useStimuliContext } from "./StimuliContext";
 import { InputNumberProps } from "antd";
 
 type GameControlContextType = {

@@ -1,4 +1,4 @@
-import { useGameControlContext } from "@/context/gameControlContext";
+import { useGameControlContext } from "@/context/GameControlContext";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { Button, Flex, InputNumber, Typography } from "antd";
 

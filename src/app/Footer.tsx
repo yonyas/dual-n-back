@@ -1,12 +1,12 @@
 "use client";
-import { useThemeContext } from "@/context/themeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 import s from "./page.module.css";
 import {
   GithubOutlined,
   InstagramOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { ThemeIcon } from "@/components/themeIcon";
+import { ThemeIcon } from "@/components/ThemeIcon";
 
 export default function Footer() {
   const { theme } = useThemeContext();

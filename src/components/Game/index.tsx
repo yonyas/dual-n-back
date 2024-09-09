@@ -1,8 +1,8 @@
 "use client";
 import { Flex } from "antd";
-import Board from "../board";
-import Buttons from "../buttons";
-import Panel from "../panel";
+import Board from "../Board";
+import Buttons from "../Buttons";
+import Panel from "../Panel";
 
 export type Response = "response" | "no-response";
 

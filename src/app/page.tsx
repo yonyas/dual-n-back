@@ -1,12 +1,12 @@
 "use client";
 import { ConfigProvider, Flex } from "antd";
 import "./global.css";
-import Game from "@/components/game";
-import Result from "@/components/result";
-import GameControlProvider from "@/context/gameControlContext";
-import StimuliProvider from "@/context/stimuliContext";
+import Game from "@/components/Game";
+import Result from "@/components/Result";
+import GameControlProvider from "@/context/GameControlContext";
+import StimuliProvider from "@/context/StimuliContext";
 import s from "./page.module.css";
-import { useThemeContext } from "@/context/themeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 
 export default function Home() {
   const { theme } = useThemeContext();

@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
 import { ButtonProps as AntdButtonProps } from "antd/lib/button/button";
-import { useThemeContext } from "@/context/themeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 import { Button } from "antd";
 
 type ThemeIconProps = {

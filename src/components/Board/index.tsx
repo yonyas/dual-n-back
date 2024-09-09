@@ -1,6 +1,6 @@
-import { useThemeContext } from "@/context/themeContext";
+import { useThemeContext } from "@/context/ThemeContext";
 import s from "./styles.module.css";
-import { useStimuliContext } from "@/context/stimuliContext";
+import { useStimuliContext } from "@/context/StimuliContext";
 
 export default function Board() {
   const { currentPositionIndex } = useStimuliContext();

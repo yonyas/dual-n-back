@@ -1,7 +1,7 @@
 "use client";
-import { History, Response } from "@/components/game";
-import { useGameControlContext } from "@/context/gameControlContext";
-import { useStimuliContext } from "@/context/stimuliContext";
+import { History, Response } from "@/components/Game";
+import { useGameControlContext } from "@/context/GameControlContext";
+import { useStimuliContext } from "@/context/StimuliContext";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 export default function useKeyControl() {

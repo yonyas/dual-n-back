@@ -1,6 +1,6 @@
 import { Button, Flex } from "antd";
 import Image from "next/image";
-import { useStimuliContext } from "@/context/stimuliContext";
+import { useStimuliContext } from "@/context/StimuliContext";
 import useKeyControl from "@/hooks/useKeyControl";
 
 export default function Buttons() {
