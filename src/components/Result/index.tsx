@@ -11,43 +11,40 @@ export default function Result() {
   const positionScoreCalculator = new ScoreCalculator(positionHistories);
   const soundScoreCalculator = new ScoreCalculator(soundHistories);
 
-  const positionData = [
-    {
-      종류: "위치",
-      "매치됨-누름": positionScoreCalculator.calculateResponses().잘누름,
-      "매치됨-못누름": positionScoreCalculator.calculateResponses().못누름,
-      "매치안됨-누름": positionScoreCalculator.calculateResponses().잘못누름,
-      "매치안됨-안누름": positionScoreCalculator.calculateResponses().잘안누름,
-      점수: positionScoreCalculator.getScore(),
-    },
-  ];
+  const positionData = {
+    key: "position",
+    종류: "위치",
+    "매치됨-누름": positionScoreCalculator.calculateResponses().잘누름,
+    "매치됨-못누름": positionScoreCalculator.calculateResponses().못누름,
+    "매치안됨-누름": positionScoreCalculator.calculateResponses().잘못누름,
+    "매치안됨-안누름": positionScoreCalculator.calculateResponses().잘안누름,
+    점수: positionScoreCalculator.getScore(),
+  };
 
-  const soundData = [
-    {
-      종류: "소리",
-      "매치됨-누름": soundScoreCalculator.calculateResponses().잘누름,
-      "매치됨-못누름": soundScoreCalculator.calculateResponses().못누름,
-      "매치안됨-누름": soundScoreCalculator.calculateResponses().잘못누름,
-      "매치안됨-안누름": soundScoreCalculator.calculateResponses().잘안누름,
-      점수: soundScoreCalculator.getScore(),
-    },
-  ];
+  const soundData = {
+    key: "sound",
+    종류: "소리",
+    "매치됨-누름": soundScoreCalculator.calculateResponses().잘누름,
+    "매치됨-못누름": soundScoreCalculator.calculateResponses().못누름,
+    "매치안됨-누름": soundScoreCalculator.calculateResponses().잘못누름,
+    "매치안됨-안누름": soundScoreCalculator.calculateResponses().잘안누름,
+    점수: soundScoreCalculator.getScore(),
+  };
 
-  const total = [
-    {
-      종류: "합계",
-      점수:
-        positionHistories.length > 0
-          ? (
-              (positionScoreCalculator.correctTrials() +
-                soundScoreCalculator.correctTrials()) /
-              (positionHistories.length + soundHistories.length)
-            ).toFixed(2)
-          : 0,
-    },
-  ];
+  const total = {
+    key: "total",
+    종류: "합계",
+    점수:
+      positionHistories.length > 0
+        ? (
+            (positionScoreCalculator.correctTrials() +
+              soundScoreCalculator.correctTrials()) /
+            (positionHistories.length + soundHistories.length)
+          ).toFixed(2)
+        : 0,
+  };
 
-  const data = [...positionData, ...soundData, ...total];
+  const data = [positionData, soundData, total];
 
   return (
     <Flex vertical style={{ width: 400, justifyContent: "center" }}>
