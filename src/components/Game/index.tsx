@@ -18,7 +18,6 @@ export default function Game() {
       <Panel />
       <Board />
       <Buttons />
-      {/* config modal */}
     </Flex>
   );
 }

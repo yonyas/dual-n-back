@@ -1,7 +1,4 @@
 "use client";
-import { History } from "@/components/Game";
-import { randomNum } from "@/utils/randomNum";
-import { getSounds } from "@/utils/sounds";
 import {
   createContext,
   Dispatch,
@@ -9,6 +6,9 @@ import {
   useContext,
   useState,
 } from "react";
+import { History } from "@/components/Game";
+import { randomNum } from "@/utils/randomNum";
+import { getSounds } from "@/utils/sounds";
 
 type StimuliContextType = {
   isPositionPressed: boolean;

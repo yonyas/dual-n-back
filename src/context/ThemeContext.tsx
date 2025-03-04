@@ -26,7 +26,7 @@ export default function ThemeProvider({
   };
 
   useEffect(() => {
-    changeTheme(getLocalStorage("theme"));
+    changeTheme(getLocalStorage("theme") || "light");
   }, []);
 
   return (

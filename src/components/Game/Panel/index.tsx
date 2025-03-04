@@ -36,7 +36,7 @@ export default function Panel() {
           disabled={gameActive}
         />
       </Flex>
-      <Flex gap={4}>
+      <Flex gap={4} align="center">
         <Typography>{`${trialCounter} /`}</Typography>
         <InputNumber
           min={2 * n + 17}
@@ -49,8 +49,6 @@ export default function Panel() {
       <Button onClick={gameActive ? onStop : onStart}>
         {gameActive ? "끝내기" : "시작"}
       </Button>
-      {/* TODO: setting 기능 나중에 개발 */}
-      {/* <Button icon={<SettingOutlined />}></Button> */}
     </Flex>
   );
 }

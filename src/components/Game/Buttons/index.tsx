@@ -47,6 +47,7 @@ export default function Buttons() {
         style={{ backgroundColor: positionBackground }}
         onMouseDown={handleLeftKeyDown}
         onMouseUp={handleLeftKeyUp}
+        disabled={positionHistories.length === 0}
       >
         위치
       </Button>

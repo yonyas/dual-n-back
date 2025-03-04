@@ -1,15 +1,17 @@
 "use client";
+import Image from "next/image";
 import { Flex, Switch } from "antd";
 import s from "./page.module.css";
 import { MoonOutlined, SettingFilled, SunOutlined } from "@ant-design/icons";
 import { useThemeContext } from "@/context/ThemeContext";
-import Image from "next/image";
+import { useModalContext } from "@/context/ModalContext";
 import blackLogo from "../../public/nback-logo/png/logo-black.png";
 import whiteLogo from "../../public/nback-logo/png/logo-white.png";
 import { ThemeButton } from "@/components/ThemeIcon";
 
 export default function Header() {
   const { theme, changeTheme } = useThemeContext();
+  const { openModal } = useModalContext();
 
   return (
     <div className={`${s.header} ${theme === "dark" ? s.dark : ""}`}>
@@ -34,7 +36,12 @@ export default function Header() {
           unCheckedChildren={<SunOutlined />}
         />
 
-        <ThemeButton shape="circle" ghost={true} icon={SettingFilled} />
+        <ThemeButton
+          shape="circle"
+          ghost={true}
+          icon={SettingFilled}
+          onClick={openModal}
+        />
       </Flex>
     </div>
   );
