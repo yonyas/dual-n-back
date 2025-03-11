@@ -38,7 +38,7 @@ export default function ConfigModal() {
         </Typography.Title>
 
         <div>
-          <Typography.Text>자극 표시 시간: {gameSpeed}</Typography.Text>
+          <Typography.Text>자극 표시 속도: {gameSpeed}</Typography.Text>
           <Slider
             min={1}
             max={5}
