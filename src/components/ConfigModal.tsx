@@ -1,18 +1,22 @@
 "use client";
 import { useState } from "react";
-import { Modal, Slider, Typography, Button, Space } from "antd";
-import { useModalContext } from "@/context/ModalContext";
+import { Modal, Slider, Typography, Button, Space, ColorPicker } from "antd";
 import { STIMULUS_INTERVAL_MS } from "@/constants/constants";
+import { useModalContext } from "@/context/ModalContext";
+import { useThemeContext } from "@/context/ThemeContext";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 
 export default function ConfigModal() {
   const { isModalOpen, closeModal } = useModalContext();
+  const { stimulusColor, changeStimulusColor } = useThemeContext();
   const [gameSpeed, setGameSpeed] = useState(() => {
     return getLocalStorage<number>("gameSpeed") ?? STIMULUS_INTERVAL_MS;
   });
+  const [tempColor, setTempColor] = useState(stimulusColor);
 
   const saveSettings = () => {
     setLocalStorage("gameSpeed", gameSpeed);
+    changeStimulusColor(tempColor);
     closeModal();
   };
 
@@ -54,6 +58,20 @@ export default function ConfigModal() {
               3: "3",
               4: "4",
               5: "5",
+            }}
+          />
+        </div>
+
+        <div>
+          <Typography.Text>자극 색상 </Typography.Text>
+          <ColorPicker
+            value={tempColor}
+            onChange={(value) => setTempColor(value.toRgbString())}
+            style={{
+              width: "35px",
+              height: "35px",
+              padding: "2px",
+              cursor: "pointer",
             }}
           />
         </div>

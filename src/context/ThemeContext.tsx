@@ -9,6 +9,8 @@ const ThemeContext = createContext<ThemeContextType>({} as ThemeContextType);
 export type ThemeContextType = {
   theme: Theme;
   changeTheme: (theme: Theme) => void;
+  stimulusColor: string;
+  changeStimulusColor: (color: string) => void;
 };
 
 export default function ThemeProvider({
@@ -19,18 +21,29 @@ export default function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(
     getLocalStorage("theme") || "light"
   );
+  const [stimulusColor, setStimulusColor] = useState<string>(
+    (getLocalStorage("stimulusColor") || "#2b62d7") as unknown as string
+  );
 
   const changeTheme = (theme: Theme) => {
     setTheme(theme);
     setLocalStorage("theme", theme);
   };
 
+  const changeStimulusColor = (color: string) => {
+    setStimulusColor(color);
+    setLocalStorage("stimulusColor", color);
+  };
+
   useEffect(() => {
     changeTheme(getLocalStorage("theme") || "light");
+    changeStimulusColor(getLocalStorage("stimulusColor") || "#2b62d7");
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, changeTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, changeTheme, stimulusColor, changeStimulusColor }}
+    >
       {children}
     </ThemeContext.Provider>
   );

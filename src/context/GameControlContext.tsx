@@ -6,7 +6,6 @@ import {
   useContext,
   useRef,
   useState,
-  useEffect,
 } from "react";
 import { InputNumberProps } from "antd";
 import { useStimuliContext } from "./StimuliContext";
@@ -42,7 +41,6 @@ export default function GameControlProvider({
   const [stimulusInterval, setStimulusInterval] = useState(
     getLocalStorage<number>("gameSpeed") ?? STIMULUS_INTERVAL_MS
   );
-  console.log("stimulusInterval: ", stimulusInterval);
 
   const currentPositionIndexTimeoutId = useRef<number | undefined>();
   const timeoutId = useRef<number | undefined>();
