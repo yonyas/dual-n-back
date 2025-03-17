@@ -1,11 +1,7 @@
 "use client";
 import { useThemeContext } from "@/context/ThemeContext";
 import s from "./page.module.css";
-import {
-  GithubOutlined,
-  InstagramOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { GithubOutlined, UserOutlined } from "@ant-design/icons";
 import { ThemeIcon } from "@/components/ThemeIcon";
 
 export default function Footer() {
@@ -26,13 +22,6 @@ export default function Footer() {
         rel="noopener noreferrer"
       >
         <ThemeIcon icon={UserOutlined} />
-      </a>
-      <a
-        href="https://www.instagram.com/mouseyon"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <ThemeIcon icon={InstagramOutlined} />
       </a>
     </footer>
   );
