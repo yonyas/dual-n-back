@@ -1,6 +1,14 @@
 "use client";
 import { useState } from "react";
-import { Modal, Slider, Typography, Button, Space, ColorPicker } from "antd";
+import {
+  Modal,
+  Flex,
+  Slider,
+  Typography,
+  Button,
+  Space,
+  ColorPicker,
+} from "antd";
 import { STIMULUS_INTERVAL_MS } from "@/constants/constants";
 import { useModalContext } from "@/context/ModalContext";
 import { useThemeContext } from "@/context/ThemeContext";
@@ -41,7 +49,7 @@ export default function ConfigModal() {
           게임 설정을 변경할 수 있습니다
         </Typography.Title>
 
-        <div>
+        {/* <div>
           <Typography.Text>자극 표시 속도: {gameSpeed}</Typography.Text>
           <Slider
             min={1}
@@ -60,10 +68,10 @@ export default function ConfigModal() {
               5: "5",
             }}
           />
-        </div>
+        </div> */}
 
-        <div>
-          <Typography.Text>자극 색상 </Typography.Text>
+        <Flex align="center" justify="space-between">
+          <Typography.Text>자극 색상</Typography.Text>
           <ColorPicker
             value={tempColor}
             onChange={(value) => setTempColor(value.toRgbString())}
@@ -74,7 +82,7 @@ export default function ConfigModal() {
               cursor: "pointer",
             }}
           />
-        </div>
+        </Flex>
       </Space>
     </Modal>
   );

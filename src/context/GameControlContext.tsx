@@ -73,12 +73,10 @@ export default function GameControlProvider({
   };
 
   const handleStart = () => {
-    // 왜 속도 반영이 안되냐
     const savedSpeed = getLocalStorage<number>(
       "gameSpeed",
       STIMULUS_INTERVAL_MS
     );
-    console.log("savedSpeed: ", savedSpeed);
     if (savedSpeed !== null) {
       setStimulusInterval(savedSpeed);
     }
@@ -99,15 +97,9 @@ export default function GameControlProvider({
       }, stimulusInterval * 1000);
 
       timeoutId.current = window.setTimeout(() => {
-        console.log(
-          `Trial ${newTrialCounter} duration:`,
-          performance.now() - startTime,
-          "ms"
-        );
         gameLoop(newTrialCounter)();
       }, (stimulusInterval + 0.1) * 1000);
     } else {
-      console.log(`Game ended at:`, new Date().toISOString());
       stopGame();
     }
   };
