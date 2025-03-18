@@ -38,9 +38,9 @@ export default function GameControlProvider({
   const [trials, setTrials] = useState(60);
   const [trialCounter, setTrialCounter] = useState(0);
   const [gameActive, setGameActive] = useState(false);
-  const [stimulusInterval, setStimulusInterval] = useState(
-    getLocalStorage<number>("gameSpeed") ?? STIMULUS_INTERVAL_MS
-  );
+
+  const stimulusInterval =
+    getLocalStorage<number>("gameSpeed") ?? STIMULUS_INTERVAL_MS;
 
   const currentPositionIndexTimeoutId = useRef<number | undefined>();
   const timeoutId = useRef<number | undefined>();
@@ -73,23 +73,14 @@ export default function GameControlProvider({
   };
 
   const handleStart = () => {
-    // 왜 속도 반영이 안되냐
-    const savedSpeed = getLocalStorage<number>(
-      "gameSpeed",
-      STIMULUS_INTERVAL_MS
-    );
-    console.log("savedSpeed: ", savedSpeed);
-    if (savedSpeed !== null) {
-      setStimulusInterval(savedSpeed);
-    }
+    const stimulusInterval =
+      getLocalStorage<number>("gameSpeed") ?? STIMULUS_INTERVAL_MS;
 
     initGame();
-    gameLoop(trialCounter)();
+    gameLoop(trialCounter, stimulusInterval);
   };
 
-  const gameLoop = (trialCounter: number) => () => {
-    const startTime = performance.now();
-
+  const gameLoop = (trialCounter: number, stimulusInterval: number) => {
     const newTrialCounter = trialCounter + 1;
     if (newTrialCounter < trials + 1) {
       generateStimuli(n);
@@ -99,15 +90,9 @@ export default function GameControlProvider({
       }, stimulusInterval * 1000);
 
       timeoutId.current = window.setTimeout(() => {
-        console.log(
-          `Trial ${newTrialCounter} duration:`,
-          performance.now() - startTime,
-          "ms"
-        );
-        gameLoop(newTrialCounter)();
+        gameLoop(newTrialCounter, stimulusInterval);
       }, (stimulusInterval + 0.1) * 1000);
     } else {
-      console.log(`Game ended at:`, new Date().toISOString());
       stopGame();
     }
   };

@@ -42,7 +42,7 @@ export default function ConfigModal() {
         </Typography.Title>
 
         <div>
-          <Typography.Text>자극 표시 속도: {gameSpeed}</Typography.Text>
+          <Typography.Text>자극 표시 속도</Typography.Text>
           <Slider
             min={1}
             max={5}
@@ -53,11 +53,11 @@ export default function ConfigModal() {
               open: false,
             }}
             marks={{
-              1: "1",
-              2: "2",
-              3: "3",
-              4: "4",
-              5: "5",
+              1: "1초",
+              2: "2초",
+              3: "3초",
+              4: "4초",
+              5: "5초",
             }}
           />
         </div>
