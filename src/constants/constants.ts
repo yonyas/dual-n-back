@@ -1,1 +1,1 @@
-export const STIMULUS_INTERVAL_MS = 2.5;
+export const STIMULUS_INTERVAL_MS = 3;

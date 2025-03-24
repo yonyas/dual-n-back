@@ -44,20 +44,20 @@ export default function ConfigModal() {
         <div>
           <Typography.Text>자극 표시 속도</Typography.Text>
           <Slider
-            min={1}
-            max={5}
-            step={1}
+            min={2}
+            max={4}
+            step={0.5}
             value={gameSpeed}
             onChange={(value) => setGameSpeed(value)}
             tooltip={{
               open: false,
             }}
             marks={{
-              1: "1초",
               2: "2초",
+              2.5: "2.5초",
               3: "3초",
+              3.5: "3.5초",
               4: "4초",
-              5: "5초",
             }}
           />
         </div>
