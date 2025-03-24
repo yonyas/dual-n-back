@@ -18,7 +18,7 @@ export default function Panel() {
   };
 
   const decrementN = () => {
-    if (n > 1) setN(n - 1);
+    if (n >= 1) setN(n - 1);
   };
 
   return (
@@ -27,7 +27,7 @@ export default function Panel() {
         <Button
           icon={<CaretDownOutlined />}
           onClick={decrementN}
-          disabled={gameActive || n === 2}
+          disabled={gameActive || n === 1}
         />
         <Typography>{n}</Typography>
         <Button
