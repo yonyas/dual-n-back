@@ -8,11 +8,11 @@ export default function Main({ children }: { children: React.ReactNode }) {
   const { isModalOpen } = useModalContext();
 
   return (
-    <div>
+    <>
       <Header />
       <div style={{ flex: 1, display: "flex" }}>{children}</div>
       <Footer />
       {isModalOpen && <ConfigModal />}
-    </div>
+    </>
   );
 }

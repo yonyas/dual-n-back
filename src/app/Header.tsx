@@ -26,6 +26,7 @@ export default function Header() {
 
       <Flex gap={12} align="center">
         <Switch
+          className={s.switch}
           defaultChecked={theme === "dark"}
           checked={theme === "dark"}
           onChange={(checked, e) => {

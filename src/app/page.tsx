@@ -28,9 +28,9 @@ export default function Home() {
             Table:
               theme === "dark"
                 ? {
-                    borderColor: "#a4a4a4",
-                    headerSplitColor: "#a4a4a4",
-                    headerBg: "#4b4b4b",
+                    borderColor: "var(--border-color)",
+                    headerSplitColor: "var(--border-color)",
+                    headerBg: "var(--game-header-color)",
                   }
                 : {},
           },
@@ -39,9 +39,9 @@ export default function Home() {
             ...(theme === "dark"
               ? {
                   colorPrimary: "#1f1f1f",
-                  colorBgBase: "#121212",
-                  colorTextBase: "#ffffff",
-                  colorBorder: "#a4a4a4",
+                  colorBgBase: "var(--background-dark-color)",
+                  colorTextBase: "var(--dark-text-color)",
+                  colorBorder: "var(--game-border-color)",
                 }
               : {}),
           },

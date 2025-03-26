@@ -1,6 +1,7 @@
 import { Flex, Table, Typography } from "antd";
 import { ScoreCalculator } from "@/utils/getScore";
 import { useStimuliContext } from "@/context/StimuliContext";
+import s from "./styles.module.css";
 
 export default function Result() {
   const { Title } = Typography;
@@ -49,7 +50,7 @@ export default function Result() {
   return (
     <Flex vertical style={{ width: 400, justifyContent: "center" }}>
       <Title level={3}>점수</Title>
-      <Table dataSource={data} pagination={false}>
+      <Table dataSource={data} pagination={false} className={s.table}>
         <Column title="" dataIndex="종류" key="종류" />
         <ColumnGroup title="매치됨">
           <Column

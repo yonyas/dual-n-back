@@ -1,0 +1,3 @@
+.table :global(.ant-table-cell) {
+  white-space: nowrap;
+}
