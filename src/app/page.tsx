@@ -39,9 +39,9 @@ export default function Home() {
             ...(theme === "dark"
               ? {
                   colorPrimary: "#1f1f1f",
-                  colorBgBase: "var(--background-dark-color)",
-                  colorTextBase: "var(--dark-text-color)",
-                  colorBorder: "var(--game-border-color)",
+                  colorBgBase: "#121212",
+                  colorTextBase: "#ffffff",
+                  colorBorder: "#a4a4a4",
                 }
               : {}),
           },
