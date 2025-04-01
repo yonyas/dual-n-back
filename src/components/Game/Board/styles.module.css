@@ -1,11 +1,17 @@
 .table-wrapper {
   border-radius: 10%;
   overflow: hidden;
+  width: 100%;
+  max-width: 30rem;
 }
 
 .table {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  table-layout: fixed;
+  overflow-x: auto;
   border-collapse: collapse;
   background-color: var(--background-color);
 }
@@ -23,12 +29,12 @@
 
 .box {
   border-radius: 4px;
-  width: 140px;
-  height: 140px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
 }
 
 .show {
