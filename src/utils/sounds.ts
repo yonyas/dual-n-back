@@ -8,7 +8,7 @@ export const getSounds = () => {
       5: new Audio("/sound/Q.wav"),
       6: new Audio("/sound/R.wav"),
       7: new Audio("/sound/P.wav"),
-      8: new Audio("/sound/A.wav"),
+      8: new Audio("/sound/C.wav"),
       9: new Audio("/sound/G.wav"),
     };
   }
