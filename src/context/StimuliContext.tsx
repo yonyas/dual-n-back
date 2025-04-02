@@ -47,18 +47,24 @@ export default function StimuliProvider({
     const randomPositionIndex = randomNum();
     const randomSoundIndex = randomNum();
 
-    setPositionHistories((prev) => {
-      const isPositionMatch = prev.at(-n)?.index === randomPositionIndex;
-      return [
-        ...prev,
-        {
-          index: randomPositionIndex,
-          match: isPositionMatch,
-          myResponse: "no-response",
-        },
-      ];
-    });
-    setCurrentPositionIndex(randomPositionIndex);
+    const sound = sounds?.[randomSoundIndex];
+    if (sound) {
+      sound.currentTime = 0;
+
+      const playPromise = sound.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.error("오디오 재생 실패:", error);
+          setTimeout(() => {
+            sound.currentTime = 0;
+            sound.play().catch((e) => console.error("재시도 실패:", e));
+          }, 100);
+        });
+      }
+    } else {
+      console.error("사운드 객체를 찾을 수 없음:", randomSoundIndex);
+    }
 
     setSoundHistories((prev) => {
       const isSoundMatch = prev.at(-n)?.index === randomSoundIndex;
@@ -71,7 +77,19 @@ export default function StimuliProvider({
         },
       ];
     });
-    sounds?.[randomSoundIndex]?.play();
+
+    setPositionHistories((prev) => {
+      const isPositionMatch = prev.at(-n)?.index === randomPositionIndex;
+      return [
+        ...prev,
+        {
+          index: randomPositionIndex,
+          match: isPositionMatch,
+          myResponse: "no-response",
+        },
+      ];
+    });
+    setCurrentPositionIndex(randomPositionIndex);
   };
 
   return (

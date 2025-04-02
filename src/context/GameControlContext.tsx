@@ -11,6 +11,7 @@ import { InputNumberProps } from "antd";
 import { useStimuliContext } from "./StimuliContext";
 import { STIMULUS_INTERVAL_MS } from "@/constants/constants";
 import { getLocalStorage } from "@/utils/localStorage";
+import useIsMobile from "@/hooks/useIsMobile";
 
 type GameControlContextType = {
   n: number;
@@ -23,6 +24,8 @@ type GameControlContextType = {
   handleStop: () => void;
   handleTrialsChange: InputNumberProps["onChange"];
   stimulusInterval: number;
+  showResultModal: boolean;
+  setShowResultModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const GameControlContext = createContext<GameControlContextType>(
@@ -38,6 +41,9 @@ export default function GameControlProvider({
   const [trials, setTrials] = useState(60);
   const [trialCounter, setTrialCounter] = useState(0);
   const [gameActive, setGameActive] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
+
+  const isMobile = useIsMobile();
 
   const stimulusInterval =
     getLocalStorage<number>("gameSpeed") ?? STIMULUS_INTERVAL_MS;
@@ -62,13 +68,20 @@ export default function GameControlProvider({
     setTrialCounter(0);
     setGameActive(false);
     setCurrentPositionIndex(undefined);
-    if (timeoutId.current) {
-      clearTimeout(timeoutId.current);
-      timeoutId.current = undefined;
+
+    if (typeof window !== "undefined") {
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = undefined;
+      }
+      if (currentPositionIndexTimeoutId.current) {
+        clearTimeout(currentPositionIndexTimeoutId.current);
+        currentPositionIndexTimeoutId.current = undefined;
+      }
     }
-    if (currentPositionIndexTimeoutId.current) {
-      clearTimeout(currentPositionIndexTimeoutId.current);
-      currentPositionIndexTimeoutId.current = undefined;
+
+    if (isMobile) {
+      setShowResultModal(true);
     }
   };
 
@@ -85,15 +98,21 @@ export default function GameControlProvider({
     if (newTrialCounter < trials + 1) {
       generateStimuli(n);
       setTrialCounter(newTrialCounter);
-      currentPositionIndexTimeoutId.current = window.setTimeout(() => {
-        setCurrentPositionIndex(undefined);
-      }, stimulusInterval * 1000);
 
-      timeoutId.current = window.setTimeout(() => {
-        gameLoop(newTrialCounter, stimulusInterval);
-      }, (stimulusInterval + 0.1) * 1000);
+      if (typeof window !== "undefined") {
+        currentPositionIndexTimeoutId.current = window.setTimeout(() => {
+          setCurrentPositionIndex(undefined);
+        }, stimulusInterval * 1000);
+
+        timeoutId.current = window.setTimeout(() => {
+          gameLoop(newTrialCounter, stimulusInterval);
+        }, (stimulusInterval + 0.1) * 1000);
+      }
     } else {
       stopGame();
+      if (isMobile) {
+        setShowResultModal(true);
+      }
     }
   };
 
@@ -118,6 +137,8 @@ export default function GameControlProvider({
         handleStop,
         handleTrialsChange,
         stimulusInterval,
+        showResultModal,
+        setShowResultModal,
       }}
     >
       {children}
